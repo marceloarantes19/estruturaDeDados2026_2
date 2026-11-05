@@ -51,4 +51,50 @@ class ListaDE:
       self.ultimo().setProx(None)
       no.setAnte(None)
     return no
-  
+  def insereNaOrdem(self, chave, nome):
+    no = self.criaNo(chave, nome)
+    if self.listaVazia():
+      self.__cabeca.setAnte(no)
+      self.__cabeca.setProx(no)
+    else:
+      ant = self.__cabeca 
+      atu = self.primeiro() 
+      while atu != None and atu.getChave() < chave:
+        ant = atu
+        atu = atu.getProx()
+      if ant == self.__cabeca: 
+        no.setProx(atu)
+        atu.setAnte(no)
+        self.__cabeca.setAnte(no) 
+      elif atu == None:
+        no.setAnte(ant)
+        ant.setProx(no)
+        self.__cabeca.setProx(no)
+      else:
+        no.setProx(atu)
+        no.setAnte(ant)
+        ant.setProx(no)
+        atu.setAnte(no) 
+  def retiraNo(self, chave):
+    no = None
+    if not self.listaVazia():
+      ant = self.__cabeca
+      atu = self.primeiro()
+      while atu != None and atu.getChave() != chave:
+        ant = atu
+        atu = atu.getProx()
+      if atu != None:
+        no = atu
+        if ant == self.__cabeca: 
+          self.__cabeca.setAnte(atu.getProx())
+          if self.primeiro() != None:
+            self.primeiro().setAnte(None)
+        elif atu.getProx() == None: 
+          self.__cabeca.setProx(ant)
+          ant.setProx(None)
+        else: 
+          ant.setProx(atu.getProx())
+          atu.getProx().setAnte(ant)
+        atu.setProx(None)
+        atu.setAnte(None)
+    return atu
