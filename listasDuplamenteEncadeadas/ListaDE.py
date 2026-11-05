@@ -97,4 +97,20 @@ class ListaDE:
           atu.getProx().setAnte(ant)
         atu.setProx(None)
         atu.setAnte(None)
-    return atu
+    return no
+  def mostraLista(self):
+    if self.listaVazia():
+      print("Lista vazia")
+    else:
+      atu = self.primeiro()
+      while atu != None:
+        print(atu.getValores())
+        atu = atu.getProx()
+  def mostraListaInversa(self):
+    if self.listaVazia():
+      print("Lista vazia")
+    else:
+      atu = self.ultimo()
+      while atu != None:
+        print(atu.getValores())
+        atu = atu.getAnte()
