@@ -2,28 +2,27 @@ from Elemento import Elemento
 from NoABB import NoABB
 class ArvoreBB:
   def __init__(self):
-    self.__cabeca = None
-  def getCabeca(self):
-    return self.__cabeca 
+    self.__raiz = None
+  def getRaiz(self):
+    return self.__raiz 
   def arvoreVazia(self):
-    return self.getCabeca() == None 
+    return self.getRaiz() == None 
+  def eRaiz(self, no):
+    return no == self.getRaiz()
   def criaNo(self, chave = -1, nome = ""):
     return NoABB(Elemento(chave, nome))
   def inserir(self, chave, nome):
     no = self.criaNo(chave, nome)
     if self.arvoreVazia():
-      self.__cabeca = no 
+      self.__raiz = no 
     else:
-      self.insereNo(None, self.getCabeca(), no)
+      self.insereNo(None, self.getRaiz(), no)
   def insereNo(self, pai, atual, no):
-    #print("***** ", pai.getChave(), atual.getChave() if atual!=None else "none")
     if atual == None: # Insere o No na árvore
       if no.getChave() < pai.getChave():
         pai.setFe(no)
-        print(pai.getFe().getValores())
       else:
         pai.setFd(no)
-        print(pai.getFd().getValores())
     elif no.getChave() < atual.getChave():
       self.insereNo(atual, atual.getFe(), no)
     else:
@@ -43,3 +42,25 @@ class ArvoreBB:
       self.posOrdem(no.getFe())
       self.posOrdem(no.getFd())
       print(no.getValores())
+  def remover(self, chave):
+    ret = None
+    if not self.arvoreVazia():
+      ret = self.removeNo(None, self.getRaiz(), chave)
+    return ret
+  def removeNo(self, pai, atual, chave):
+    ret = None
+    if atual == None: # O nó não foi encontrado
+      ret = None
+    elif chave < atual.getChave(): # o nó a ser removido está na subárvore esquerda
+      ret = self.removeNo(atual, atual.getFe(), chave)
+    elif chave > atual.getChave(): # o nó a ser removido está na subárvore direita
+      ret = self.removeNo(atual, atual.getFd(), chave)
+    else: # o nó a ser removido é o atual
+      ret = atual 
+      if atual.eFolha(): # o nó a ser removido é uma folha
+        if self.eRaiz(atual):
+          self.__raiz = None
+        elif atual.eFe(pai):
+          pai.setFe(None)
+        else:
+          pai.setFd(None)

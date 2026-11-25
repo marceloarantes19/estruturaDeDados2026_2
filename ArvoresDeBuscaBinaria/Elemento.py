@@ -12,3 +12,7 @@ class Elemento:
         self.__nome = nome
     def getValores(self):
         return (self.__chave, self.__nome)    
+    def setValores(self, valores):
+        self.__chave = valores[0]
+        self.__nome = valores[1]
+    

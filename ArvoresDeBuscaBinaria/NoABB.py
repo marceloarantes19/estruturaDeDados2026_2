@@ -30,6 +30,12 @@ class NoABB:
     return self.getDado().getChave()
   def getValores(self):
     return self.getDado().getValores()
+  def setValores(self, valores):
+    self.getDado().setValores(valores)
+  def soTemFe(self):
+    return self.temFe() and not self.temFd()
+  def soTemFd(self):
+    return self.temFd() and not self.temFe()
   
   
   
